@@ -1,0 +1,36 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: timeoff-management-service
+spec:
+  type: NodePort
+  selector:
+    app: timeoff-management
+  ports:
+  - protocol: TCP
+    port: 3000
+    nodePort: 3000
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: timeoff-management-deployment
+  labels:
+    app: timeoff-management
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: timeoff-management
+  template:
+    metadata:
+      labels:
+        app: timeoff-management
+    spec:
+      containers:
+      - name: timeoff-management
+        image: $DOCKER_IMAGE_NAME:$BUILD_NUMBER
+        ports:
+        - containerPort: 3000
