@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        DOCKER_IMAGE_NAME = "oamoraso/timeoff-management"
+    }
     stages {
         stage('Build Docker Image') {
             when {
@@ -7,7 +10,7 @@ pipeline {
             }
             steps {
                 script {
-                    app = docker.build("oamoraso/timeoff-management")
+                    app = docker.build(DOCKER_IMAGE_NAME)
                     app.inside {
                         sh 'echo $(curl localhost:3000)'
                     }
@@ -25,6 +28,20 @@ pipeline {
                         app.push("latest")
                     }
                 }
+            }
+        }
+        stage('DeployToProduction') {
+            when {
+                branch 'master'
+            }
+            steps {
+                input 'Deploy to Production?'
+                milestone(1)
+                kubernetesDeploy(
+                    kubeconfigId: 'kubeconfig',
+                    configs: 'kube.yml',
+                    enableConfigSubstitution: true
+                )
             }
         }
     }
