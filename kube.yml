@@ -2,6 +2,8 @@ kind: Service
 apiVersion: v1
 metadata:
   name: timeoff-management-service
+  annotations:
+    prometheus.io/scrape: 'true'
 spec:
   type: NodePort
   selector:
