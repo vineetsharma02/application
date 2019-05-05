@@ -49,20 +49,22 @@ spec:
             
 ---
 
-apiVersion: autoscaling/v1
+apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
   name: train-schedule
   namespace: default
 spec:
   scaleTargetRef:
-    apiVersion: apps/v1beta1
+    apiVersion: apps/v1
     kind: Deployment
     name: train-schedule-deployment
   minReplicas: 1
-  maxReplicas: 4
+  maxReplicas: 5
   metrics:
   - type: Resource
     resource:
       name: cpu
-      targetAverageUtilization: 50
+      target:
+        type: Utilization
+        averageUtilization: 50
