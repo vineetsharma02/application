@@ -49,16 +49,16 @@ spec:
             
 ---
 
-apiVersion: autoscaling/v1
+apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: train-schedule
+  name: timeoff-management
   namespace: default
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: train-schedule-deployment
+    name: timeoff-management-deployment
   minReplicas: 1
   maxReplicas: 5
   metrics:
