@@ -127,10 +127,3 @@ npm start
 ## Feedback
 
 Please report any issues or feedback to <a href="https://twitter.com/FreeTimeOffApp">twitter</a> or Email: pavlo at timeoff.management
-
-First line
-second line
-3rd line
-
-4th line
-5th line
